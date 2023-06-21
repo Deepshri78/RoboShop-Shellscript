@@ -2,7 +2,7 @@ echo "Creating VMs on Azure using shell script"
 
 declare -a vmimage
 
-vmimage = (catalogue user cart payment shipping dispatch mongodb mysql redis rabbitmq)
+vmimage = ("catalogue" "user" "cart" "payment" "shipping" "dispatch" "mongodb" "mysql" "redis" "rabbitmq")
 
 
 for component in vmimage ; do
