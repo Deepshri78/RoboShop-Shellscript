@@ -6,7 +6,7 @@ echo "Logged in user is not root user."
 exit 1
 fi
 
-echo " To check whether the last command ran successfully or not"
+#echo " To check whether the last command ran successfully or not"
 
 StatusCheck () {
 
@@ -19,8 +19,7 @@ fi
 
 }
 
-APPREQ ()
-{
+APPREQ () {
  echo " To verify whether Roboshop user already exists or not"
 
  id roboshop &>>${LOG_FILE}
@@ -81,10 +80,10 @@ APPREQ ()
     mv ${COMPONENT}-main ${COMPONENT}
 
  fi
+ 
+ }
 
-}
-
-System_Setup() {
+ System_Setup() {
 
   if [ $(COMPONENT) -eq frontend ]; then
    
@@ -92,5 +91,5 @@ System_Setup() {
    
   fi
 
-}
+ }
 
