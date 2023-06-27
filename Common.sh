@@ -11,9 +11,9 @@ fi
 StatusCheck () {
 
 if [ $1 -eq 0 ]; then
-echo -e "/e[32 Last command ran successfully. /e[0"
+echo -e /e[32 "Last command ran successfully." /e[
 else
-echo -e "/e[30 Last command did not run successfully. /e[0"
+echo -e /e[30 "Last command did not run successfully." /e[0
 exit 1
 fi
 
