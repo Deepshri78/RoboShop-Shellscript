@@ -20,14 +20,16 @@ fi
 }
 
 APPREQ () {
+
  echo " To verify whether Roboshop user already exists or not"
 
  id roboshop &>>${LOG_FILE}
 
  if [ $? -ne 0 ]; then
  echo " Logged in user is not roboshop, need to add roboshop user. "
- useradd roboshop
+ useradd roboshop &>>${LOG_FILE}
  StatusCheck $?
+ fi
 
  echo " Once roboshop user is added, need to download files for specific ${COMPONENT} "
 
