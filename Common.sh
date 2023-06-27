@@ -11,9 +11,9 @@ fi
 StatusCheck () {
 
 if [ $1 -eq 0 ]; then
-echo -e /e[32 "Last command ran successfully." /e[
+echo -e "\e[32m Last command ran successfully. \e[0m"
 else
-echo -e /e[30 "Last command did not run successfully." /e[0
+echo -e "\e[30m Last command did not run successfully. \e[0m"
 exit 1
 fi
 
@@ -38,7 +38,7 @@ APPREQ () {
 
   if [ ${COMPONENT} -eq "frontend" ]; then
     echo " Stop NGINX service if already running. "
-    systemctl stop ${COMPONENT}.service &>>${LOG_FILE}
+    #systemctl stop ${COMPONENT}.service &>>${LOG_FILE}
     StatusCheck $?
 
     echo " Change current directory. "
