@@ -30,14 +30,14 @@ APPREQ ()
  useradd roboshop
  StatusCheck $?
 
- echo " Once roboshop user is added, need to download files for specific ${Component} "
+ echo " Once roboshop user is added, need to download files for specific ${COMPONENT} "
 
- curl -s -L -o /tmp/${Component}.zip "https://github.com/roboshop-devops-project/${Component}/archive/main.zip" &>>${LOG_FILE}
+ curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/${COMPONENT}/archive/main.zip" &>>${LOG_FILE}
   
 
-  if [ $(Component) -eq frontend ]; then
+  if [ $(COMPONENT) -eq frontend ]; then
     echo " Stop NGINX service if already running. "
-    systemctl stop ${Component}.service &>>${LOG_FILE}
+    systemctl stop ${COMPONENT}.service &>>${LOG_FILE}
     StatusCheck $?
 
     echo " Change current directory. "
@@ -49,15 +49,15 @@ APPREQ ()
     StatusCheck $?
 
     echo " Unzip downloaded file in current directory. "
-    unzip /tmp/${Component}.zip &>>${LOG_FILE}
+    unzip /tmp/${COMPONENT}.zip &>>${LOG_FILE}
     StatusCheck $?
 
     echo " Remove/Rename main folder. "
-    mv ${Component}-main/static/* . &>>${LOG_FILE}
+    mv ${COMPONENT}-main/static/* . &>>${LOG_FILE}
     StatusCheck $?
 
     echo " Remove/rename configuration file. "
-    mv ${Component}-main/localhost.conf /etc/nginx/default.d/roboshop.conf &>>${LOG_FILE}
+    mv ${COMPONENT}-main/localhost.conf /etc/nginx/default.d/roboshop.conf &>>${LOG_FILE}
     StatusCheck $?
 
     echo " Start the service. "
@@ -66,19 +66,19 @@ APPREQ ()
 
   else
     echo " Stop service if already running. "
-    systemctl stop ${Component}.service &>>${LOG_FILE}
+    systemctl stop ${COMPONENT}.service &>>${LOG_FILE}
     StatusCheck $?
 
     echo " Remove files from Home folder before unzipping new files. "
     cd /home/roboshop/  &>>${LOG_FILE}
     StatusCheck $?
-    rm -rf ${Component} &??${LOG_FILE}
+    rm -rf ${COMPONENT} &??${LOG_FILE}
     StatusCheck $?
 
-    unzip /tmp/${Component}.zip &>>${LOG_FILE}
+    unzip /tmp/${COMPONENT}.zip &>>${LOG_FILE}
     StatusCheck $?
 
-    mv ${Component}-main ${Component}
+    mv ${COMPONENT}-main ${COMPONENT}
 
  fi
 
@@ -86,7 +86,7 @@ APPREQ ()
 
 System_Setup() {
 
-  if [ $(Component) -eq frontend ]; then
+  if [ $(COMPONENT) -eq frontend ]; then
    
   else
    
