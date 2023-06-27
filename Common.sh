@@ -38,6 +38,7 @@ APPREQ () {
 
   if [ ${COMPONENT} == frontend ]; then
     echo " Stop NGINX service if already running. "
+    yum install nginx -y
     #systemctl stop ${COMPONENT}.service &>>${LOG_FILE}
     StatusCheck $?
 
