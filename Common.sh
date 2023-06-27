@@ -1,6 +1,6 @@
 echo "To find if the logged in user root or not"
 declare loggedinuser
-loggedinuser = $(id -u)
+loggedinuser=$(id -u)
 if [ $loggedinuser -ne 0 ]; then
 echo "Logged in user is not root user."
 exit 1
