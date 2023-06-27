@@ -1,12 +1,12 @@
 echo "To find if the logged in user root or not"
-var user
-user = $(id -u)
-if [ $user -ne 0 ]; then
+declare loggedinuser
+loggedinuser = $(id -u)
+if [ $loggedinuser -ne 0 ]; then
 echo "Logged in user is not root user."
 exit 1
 fi
 
-echo " To check whethre the last command ran successfully or not"
+echo " To check whether the last command ran successfully or not"
 
 StatusCheck () {
 
