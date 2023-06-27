@@ -36,9 +36,9 @@ APPREQ () {
  curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/${COMPONENT}/archive/main.zip" &>>${LOG_FILE}
   
 
-  if [ ${COMPONENT} -eq "frontend" ]; then
+  if [ ${COMPONENT} == frontend ]; then
     echo " Stop NGINX service if already running. "
-    
+    #systemctl stop ${COMPONENT}.service &>>${LOG_FILE}
     StatusCheck $?
 
     echo " Change current directory. "
