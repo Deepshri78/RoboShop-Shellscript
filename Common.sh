@@ -38,7 +38,7 @@ APPREQ () {
 
   if [ ${COMPONENT} -eq "frontend" ]; then
     echo " Stop NGINX service if already running. "
-    #systemctl stop ${COMPONENT}.service &>>${LOG_FILE}
+    
     StatusCheck $?
 
     echo " Change current directory. "
