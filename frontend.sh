@@ -1,3 +1,3 @@
-Component = frontend
-LOG_FILE = /tmp/${Component}
+COMPONENT=frontend
+LOG_FILE=/tmp/${COMPONENT}
 source ./Common.sh
