@@ -80,18 +80,60 @@ APPREQ () {
     unzip /tmp/${COMPONENT}.zip &>>${LOG_FILE}
     StatusCheck $?
 
-    mv ${COMPONENT}-main ${COMPONENT}
+    mv ${COMPONENT}-main ${COMPONENT} &>>${LOG_FILE}
+    StatusCheck $?
+
+    cd /home/roboshop/${COMPONENT} &>>${LOG_FILE}
+    StatusCheck $?
+
 
  fi
  
  }
 
+ Starting_Service() {
+    if [ ${COMPONENT} == Catalogue ]; then
+    sed -i 's/MONGO_DB/10.0.0.12/g' /home/roboshop/${COMPONENT}/Systemd.service
+    else
+    fi
+
+    mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service &>>${LOG_FILE}
+    StatusCheck $?
+
+    systemctl daemon-reload &>>${LOG_FILE}
+    StatusCheck $?
+
+    systemctl enable ${COMPONENT}.service &>>${LOG_FILE}
+    StatusCheck $?
+
+    systemctl start ${COMPONENT}.service &>>${LOG_FILE}
+    StatusCheck $?
+ }
+
  System_Setup() {
 
-  if [ $(COMPONENT) -eq frontend ]; then
+  if [ ${COMPONENT} == frontend ]; then
    
   echo "Hi"
    
+  elif [ ${COMPONENT} == Catalogue ]; then
+
+    curl -sL https://rpm.nodesource.com/setup_lts.x  &>>${LOG_FILE}
+    StatusCheck $?
+
+    yum install nodejs -y &>>${LOG_FILE}
+    StatusCheck $?
+
+    APPREQ
+
+    npm install  &>>${LOG_FILE}
+    StatusCheck $?
+
+    Starting_Service
+
+    
+
+
   fi
 
  }
