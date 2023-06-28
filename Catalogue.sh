@@ -1,3 +1,4 @@
 COMPONENT=Catalogue
 LOG_FILE=/tmp/${COMPONENT}
-source = ./Common.sh
+source ./Common.sh
+System_Setup
