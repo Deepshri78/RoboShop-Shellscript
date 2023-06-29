@@ -82,11 +82,11 @@ APPREQ () {
     unzip /tmp/${COMPONENT}.zip &>>${LOG_FILE}
     StatusCheck $?
 
-    echo -e "\e[32m  Remove files from Home folder before unzipping new files. \e[0m"
+    echo -e "\e[32m  Renaming -main file \e[0m"
     mv ${COMPONENT}-main ${COMPONENT} &>>${LOG_FILE}
     StatusCheck $?
 
-    echo -e "\e[32m  Remove files from Home folder before unzipping new files. \e[0m"
+    echo -e "\e[32m  Changing the current directory \e[0m"
     cd /home/roboshop/${COMPONENT} &>>${LOG_FILE}
     StatusCheck $?
 
@@ -97,23 +97,23 @@ APPREQ () {
 
  Starting_Service() {
     if [ ${COMPONENT} == catalogue ]; then
-    sed -i 's/MONGO_DB/10.0.0.12/g' /home/roboshop/${COMPONENT}/Systemd.service
+    sed -i 's/MONGO_DB/10.0.0.12/g' /home/roboshop/${COMPONENT}/systemd.service
     fi
 
     if [ ${COMPONENT} == cart ]; then
-    sed -i 's/CATALOGUE_ENDPOINT/10.0.0.6/g' /home/roboshop/${COMPONENT}/Systemd.service
-    sed -i 's/REDIS_ENDPOINT/10.0.0.14/g' /home/roboshop/${COMPONENT}/Systemd.service
+    sed -i 's/CATALOGUE_ENDPOINT/10.0.0.6/g' /home/roboshop/${COMPONENT}/systemd.service
+    sed -i 's/REDIS_ENDPOINT/10.0.0.14/g' /home/roboshop/${COMPONENT}/systemd.service
     fi
 
     if [ ${COMPONENT} == user ]; then
-    sed -i 's/MONGO_DB/10.0.0.12/g' /home/roboshop/${COMPONENT}/Systemd.service
-    sed -i 's/REDIS_ENDPOINT/10.0.0.14/g' /home/roboshop/${COMPONENT}/Systemd.service
+    sed -i 's/MONGO_DB/10.0.0.12/g' /home/roboshop/${COMPONENT}/systemd.service
+    sed -i 's/REDIS_ENDPOINT/10.0.0.14/g' /home/roboshop/${COMPONENT}/systemd.service
     fi
 
     if [ ${COMPONENT} == payment ]; then
-    sed -i 's/CARTHOST/10.0.0.7/g' /home/roboshop/${COMPONENT}/Systemd.service
-    sed -i 's/USERHOST/10.0.0.8/g' /home/roboshop/${COMPONENT}/Systemd.service
-    sed -i 's/AMQHOST/10.0.0.15/g' /home/roboshop/${COMPONENT}/Systemd.service
+    sed -i 's/CARTHOST/10.0.0.7/g' /home/roboshop/${COMPONENT}/systemd.service
+    sed -i 's/USERHOST/10.0.0.8/g' /home/roboshop/${COMPONENT}/systemd.service
+    sed -i 's/AMQHOST/10.0.0.15/g' /home/roboshop/${COMPONENT}/systemd.service
     fi
 
     mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service &>>${LOG_FILE}
@@ -165,6 +165,28 @@ APPREQ () {
     StatusCheck $?
 
     Starting_Service
+
+    elif [ ${COMPONENT} == dispatch ]; then
+    
+    echo -e "\e[32m This is Dispatch. \e[0m"
+
+    yum install golang -y  &>>${LOG_FILE}
+    StatusCheck $?
+
+
+    APPREQ
+
+    echo -e "\e[32m Appreq went well, now build \e[0m"
+
+    go mod init dispatch
+    go get 
+    go build  &>>${LOG_FILE}
+    StatusCheck $?
+
+    Starting_Service
+    
+
+
 
   fi
 
