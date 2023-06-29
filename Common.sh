@@ -224,6 +224,13 @@ APPREQ () {
     sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
     systemctl restart mongod
 
+    curl -s -L -o /tmp/mongodb.zip "https://github.com/roboshop-devops-project/mongodb/archive/main.zip"
+    cd /tmp
+    unzip mongodb.zip
+    cd mongodb-main
+    mongo < catalogue.js
+    mongo < users.js
+
     elif [ ${COMPONENT} == redis ]; then
     
     echo -e "\e[32m This is Redis. \e[0m"
@@ -240,7 +247,7 @@ APPREQ () {
     echo -e "\e[32m Starting service \e[0m"
     systemctl enable redis
     systemctl start redis
-    
+
 
   fi
 
