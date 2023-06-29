@@ -207,9 +207,22 @@ APPREQ () {
     StatusCheck $?
 
     Starting_Service
+
+    elif [ ${COMPONENT} == mongo ]; then
     
+    echo -e "\e[32m This is MongoDB. \e[0m"
 
+    curl -s -o /etc/yum.repos.d/mongodb.repo "https://raw.githubusercontent.com/roboshop-devops-project/mongodb/main/mongo.repo"
+    yum install mongodb-org -y  &>>${LOG_FILE}
+    StatusCheck $?
 
+    echo -e "\e[32m Starting service \e[0m"
+    systemctl enable mongod
+    systemctl start mongod
+
+    echo -e "\e[32m Changing the config file \e[0m"
+    sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
+    systemctl restart mongod
 
   fi
 
