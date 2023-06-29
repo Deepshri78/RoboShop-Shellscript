@@ -116,6 +116,8 @@ APPREQ () {
   echo "Hi"
    
   elif [ ${COMPONENT} == Catalogue ]; then
+    
+    echo -e "\e[32m This is Catalogue. \e[0m"
 
     curl -sL https://rpm.nodesource.com/setup_lts.x  &>>${LOG_FILE}
     StatusCheck $?
