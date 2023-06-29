@@ -224,6 +224,24 @@ APPREQ () {
     sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
     systemctl restart mongod
 
+    elif [ ${COMPONENT} == redis ]; then
+    
+    echo -e "\e[32m This is Redis. \e[0m"
+
+    dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
+    dnf module enable redis:remi-6.2 -y
+    dnf install redis -y  &>>${LOG_FILE}
+    StatusCheck $?
+
+    echo -e "\e[32m Changing the config file \e[0m"
+    sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis.conf
+    sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf
+
+    echo -e "\e[32m Starting service \e[0m"
+    systemctl enable redis
+    systemctl start redis
+    
+
   fi
 
  }
