@@ -96,7 +96,7 @@ APPREQ () {
  }
 
  Starting_Service() {
-    if [ ${COMPONENT} == Catalogue ]; then
+    if [ ${COMPONENT} == catalogue ]; then
     sed -i 's/MONGO_DB/10.0.0.12/g' /home/roboshop/${COMPONENT}/Systemd.service
     fi
 
@@ -119,7 +119,7 @@ APPREQ () {
    
   echo "Hi"
    
-  elif [ ${COMPONENT} == Catalogue ]; then
+  elif [ ${COMPONENT} == catalogue ]; then
     
     echo -e "\e[32m This is Catalogue. \e[0m"
 
