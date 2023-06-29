@@ -102,12 +102,18 @@ APPREQ () {
 
     if [ ${COMPONENT} == cart ]; then
     sed -i 's/CATALOGUE_ENDPOINT/10.0.0.6/g' /home/roboshop/${COMPONENT}/Systemd.service
-    sed -i 's/REDIS_ENDPOINT/10.0.0.14/g' /home/roboshop/${COMPONENT}/Systemd.servicel
+    sed -i 's/REDIS_ENDPOINT/10.0.0.14/g' /home/roboshop/${COMPONENT}/Systemd.service
     fi
 
     if [ ${COMPONENT} == user ]; then
     sed -i 's/MONGO_DB/10.0.0.12/g' /home/roboshop/${COMPONENT}/Systemd.service
-    sed -i 's/REDIS_ENDPOINT/10.0.0.14/g' /home/roboshop/${COMPONENT}/Systemd.servicel
+    sed -i 's/REDIS_ENDPOINT/10.0.0.14/g' /home/roboshop/${COMPONENT}/Systemd.service
+    fi
+
+    if [ ${COMPONENT} == payment ]; then
+    sed -i 's/CARTHOST/10.0.0.7/g' /home/roboshop/${COMPONENT}/Systemd.service
+    sed -i 's/USERHOST/10.0.0.8/g' /home/roboshop/${COMPONENT}/Systemd.service
+    sed -i 's/AMQHOST/10.0.0.15/g' /home/roboshop/${COMPONENT}/Systemd.service
     fi
 
     mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service &>>${LOG_FILE}
@@ -124,13 +130,9 @@ APPREQ () {
 
  System_Setup() {
 
-  if [ ${COMPONENT} == frontend ]; then
+  if [ ${COMPONENT} == catalogue ] || [ ${COMPONENT} == cart ] || [ ${COMPONENT} == user ]; then
    
-  echo "Hi"
-   
-  elif [ ${COMPONENT} == catalogue ] || [ ${COMPONENT} == cart ] || [ ${COMPONENT} == user ]; then
-    
-    echo -e "\e[32m This is Catalogue/Cart. \e[0m"
+    echo -e "\e[32m This is Catalogue/Cart/User. \e[0m"
 
     curl -sL https://rpm.nodesource.com/setup_lts.x  &>>${LOG_FILE}
     StatusCheck $?
@@ -143,6 +145,23 @@ APPREQ () {
     echo -e "\e[32m Appreq went well, now NPM install \e[0m"
 
     npm install  &>>${LOG_FILE}
+    StatusCheck $?
+
+    Starting_Service
+   
+  elif [ ${COMPONENT} == payment ]; then
+    
+    echo -e "\e[32m This is Payment. \e[0m"
+
+    yum install python36 gcc python3-devel -y  &>>${LOG_FILE}
+    StatusCheck $?
+
+
+    APPREQ
+
+    echo -e "\e[32m Appreq went well, now PIP3 install \e[0m"
+
+    pip3 install -r requirements.txt  &>>${LOG_FILE}
     StatusCheck $?
 
     Starting_Service
