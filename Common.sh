@@ -105,6 +105,11 @@ APPREQ () {
     sed -i 's/REDIS_ENDPOINT/10.0.0.14/g' /home/roboshop/${COMPONENT}/Systemd.servicel
     fi
 
+    if [ ${COMPONENT} == user ]; then
+    sed -i 's/MONGO_DB/10.0.0.12/g' /home/roboshop/${COMPONENT}/Systemd.service
+    sed -i 's/REDIS_ENDPOINT/10.0.0.14/g' /home/roboshop/${COMPONENT}/Systemd.servicel
+    fi
+
     mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service &>>${LOG_FILE}
     
     systemctl daemon-reload &>>${LOG_FILE}
@@ -123,7 +128,7 @@ APPREQ () {
    
   echo "Hi"
    
-  elif [ ${COMPONENT} == catalogue ] || [ ${COMPONENT} == cart ]; then
+  elif [ ${COMPONENT} == catalogue ] || [ ${COMPONENT} == cart ] || [ ${COMPONENT} == user ]; then
     
     echo -e "\e[32m This is Catalogue/Cart. \e[0m"
 
