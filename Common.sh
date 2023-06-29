@@ -67,7 +67,7 @@ APPREQ () {
     StatusCheck $?
 
   else
-  if 
+
     echo -e "\e[32m  Stop service if already running. \e[0m"
     #systemctl stop ${COMPONENT}.service &>>${LOG_FILE}
     StatusCheck $?
