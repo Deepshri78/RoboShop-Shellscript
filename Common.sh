@@ -69,21 +69,24 @@ APPREQ () {
   else
 
     echo -e "\e[32m  Stop service if already running. \e[0m"
-    #systemctl stop ${COMPONENT}.service &>>${LOG_FILE}
-    StatusCheck $?
+    systemctl stop ${COMPONENT}.service &>>${LOG_FILE}
+    
 
     echo -e "\e[32m  Remove files from Home folder before unzipping new files. \e[0m"
     cd /home/roboshop/  &>>${LOG_FILE}
     StatusCheck $?
     rm -rf ${COMPONENT} &??${LOG_FILE}
-    StatusCheck $?
+    
 
+    echo -e "\e[32m  Unzip files \e[0m"
     unzip /tmp/${COMPONENT}.zip &>>${LOG_FILE}
     StatusCheck $?
 
+    echo -e "\e[32m  Remove files from Home folder before unzipping new files. \e[0m"
     mv ${COMPONENT}-main ${COMPONENT} &>>${LOG_FILE}
     StatusCheck $?
 
+    echo -e "\e[32m  Remove files from Home folder before unzipping new files. \e[0m"
     cd /home/roboshop/${COMPONENT} &>>${LOG_FILE}
     StatusCheck $?
 
