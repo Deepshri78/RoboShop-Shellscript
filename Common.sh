@@ -116,6 +116,11 @@ APPREQ () {
     sed -i 's/AMQHOST/10.0.0.15/g' /home/roboshop/${COMPONENT}/systemd.service
     fi
 
+    if [ ${COMPONENT} == shipping ]; then
+    sed -i 's/CARTENDPOINT/10.0.0.7/g' /home/roboshop/${COMPONENT}/systemd.service
+    sed -i 's/DBHOST/10.0.0.13/g' /home/roboshop/${COMPONENT}/systemd.service
+    fi
+
     mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service &>>${LOG_FILE}
     
     systemctl daemon-reload &>>${LOG_FILE}
@@ -181,6 +186,24 @@ APPREQ () {
     go mod init dispatch
     go get 
     go build  &>>${LOG_FILE}
+    StatusCheck $?
+
+    Starting_Service
+
+    elif [ ${COMPONENT} == shipping ]; then
+    
+    echo -e "\e[32m This is Shipping. \e[0m"
+
+    yum install maven -y  &>>${LOG_FILE}
+    StatusCheck $?
+
+
+    APPREQ
+
+    echo -e "\e[32m Appreq went well, now clean package \e[0m"
+
+    mvn clean package 
+    mv target/shipping-1.0.jar shipping.jar  &>>${LOG_FILE}
     StatusCheck $?
 
     Starting_Service
