@@ -13,7 +13,7 @@ StatusCheck () {
 if [ $1 -eq 0 ]; then
 echo -e "\e[32m Last command ran successfully. \e[0m"
 else
-echo -e "\e[30m Last command did not run successfully. \e[0m"
+echo -e "\e[31m Last command did not run successfully. \e[0m"
 exit 1
 fi
 
