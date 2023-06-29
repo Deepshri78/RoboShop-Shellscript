@@ -100,9 +100,13 @@ APPREQ () {
     sed -i 's/MONGO_DB/10.0.0.12/g' /home/roboshop/${COMPONENT}/Systemd.service
     fi
 
+    if [ ${COMPONENT} == cart ]; then
+    sed -i 's/CATALOGUE_ENDPOINT/10.0.0.6/g' /home/roboshop/${COMPONENT}/Systemd.service
+    sed -i 's/REDIS_ENDPOINT/10.0.0.14/g' /home/roboshop/${COMPONENT}/Systemd.servicel
+    fi
+
     mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service &>>${LOG_FILE}
     
-
     systemctl daemon-reload &>>${LOG_FILE}
     StatusCheck $?
 
@@ -137,9 +141,6 @@ APPREQ () {
     StatusCheck $?
 
     Starting_Service
-
-    
-
 
   fi
 

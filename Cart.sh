@@ -1,4 +1,4 @@
 COMPONENT=cart
 LOG_FILE=/tmp/${COMPONENT}
-source ./Commmon.sh
+source ./Common.sh
 System_Setup
