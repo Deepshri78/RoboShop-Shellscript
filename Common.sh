@@ -94,7 +94,6 @@ APPREQ () {
  Starting_Service() {
     if [ ${COMPONENT} == Catalogue ]; then
     sed -i 's/MONGO_DB/10.0.0.12/g' /home/roboshop/${COMPONENT}/Systemd.service
-    else
     fi
 
     mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service &>>${LOG_FILE}
