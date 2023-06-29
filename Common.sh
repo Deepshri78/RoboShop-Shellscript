@@ -101,7 +101,7 @@ APPREQ () {
     fi
 
     mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service &>>${LOG_FILE}
-    StatusCheck $?
+    
 
     systemctl daemon-reload &>>${LOG_FILE}
     StatusCheck $?
