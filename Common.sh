@@ -119,7 +119,7 @@ APPREQ () {
    
   echo "Hi"
    
-  elif [ ${COMPONENT} == catalogue || cart ]; then
+  elif [ ${COMPONENT} == catalogue ] || [ ${COMPONENT} == cart ]; then
     
     echo -e "\e[32m This is Catalogue/Cart. \e[0m"
 
@@ -131,7 +131,7 @@ APPREQ () {
 
     APPREQ
 
-    echo -e "\e[32m Appreq went well, now NPM install. \e[0m"
+    echo -e "\e[32m Appreq went well, now NPM install \e[0m"
 
     npm install  &>>${LOG_FILE}
     StatusCheck $?
