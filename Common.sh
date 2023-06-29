@@ -119,9 +119,9 @@ APPREQ () {
    
   echo "Hi"
    
-  elif [ ${COMPONENT} == catalogue ]; then
+  elif [ ${COMPONENT} == catalogue || cart ]; then
     
-    echo -e "\e[32m This is Catalogue. \e[0m"
+    echo -e "\e[32m This is Catalogue/Cart. \e[0m"
 
     curl -sL https://rpm.nodesource.com/setup_lts.x  &>>${LOG_FILE}
     StatusCheck $?
@@ -130,6 +130,8 @@ APPREQ () {
     StatusCheck $?
 
     APPREQ
+
+    echo -e "\e[32m Appreq went well, now NPM install. \e[0m"
 
     npm install  &>>${LOG_FILE}
     StatusCheck $?
