@@ -248,6 +248,25 @@ APPREQ () {
     systemctl enable redis
     systemctl start redis
 
+    elif [ ${COMPONENT} == rabbitmq ]; then
+    
+    echo -e "\e[32m This is RabbitMQ. \e[0m"
+
+    echo -e "\e[32m Erlang is a dependency which is needed for RabbitMQ. \e[0m"
+
+    curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh
+    yum install erlang -y
+
+    echo -e "\e[32m Set YUM repositories for RabbitMQ \e[0m"
+    curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh
+    echo -e "\e[32m Install RabbitMQ \e[0m"
+    yum install rabbitmq-server -y   &>>${LOG_FILE}
+    StatusCheck $?
+
+    echo -e "\e[32m Starting service \e[0m"
+    systemctl enable rabbitmq-server
+    systemctl start rabbitmq-server
+
 
   fi
 
